@@ -6,15 +6,27 @@ RSpec.describe Business, type: :model do
   
   describe "#compare" do
 
-    context "when the attributes in the API have changed" do
+    context "when the data in the API has not changed" do
 
-      it "should return true if all the values are equal" do
+      it "should return true" do
 
         other_business_attrs = create(:business).attributes
 
         expect(business.compare(other_business_attrs)).to eq(true)
 
       end 
+
+    end
+
+    context "when the attributes in the API has changed" do
+
+      it "should return false" do
+
+        other_business_attrs = create(:business,:changed_attrs).attributes
+
+        expect(business.compare(other_business_attrs)).to eq(false)
+
+      end
 
     end
 
