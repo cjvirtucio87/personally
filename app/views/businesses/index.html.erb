@@ -1,0 +1,11 @@
+<%
+  @businesses.each do |business|
+    business.attributes.each do |attr|
+%>
+  <%= attr %><br>
+<%
+    end
+  end
+%>
+
+<%= link_to "New business", businesses_path, action: :create, method: :post %>
