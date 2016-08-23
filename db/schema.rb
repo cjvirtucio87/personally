@@ -17,11 +17,10 @@ ActiveRecord::Schema.define(version: 20160823165837) do
   enable_extension "hstore"
 
   create_table "bookmarks", force: :cascade do |t|
-    t.integer  "business_id", null: false
-    t.integer  "user_id",     null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["business_id"], name: "index_bookmarks_on_business_id", using: :btree
+    t.integer  "business",   null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
   end
 
@@ -70,7 +69,6 @@ ActiveRecord::Schema.define(version: 20160823165837) do
     t.datetime "updated_at",      null: false
   end
 
-  add_foreign_key "bookmarks", "businesses"
   add_foreign_key "bookmarks", "users"
   add_foreign_key "businesses", "users"
 end
