@@ -10,9 +10,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20160823031125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
+  create_table "bookmarks", force: :cascade do |t|
+    t.integer  "business_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["business_id"], name: "index_bookmarks_on_business_id", using: :btree
+    t.index ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
+  end
+
+  create_table "businesses", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "ttxid"
+    t.integer  "certificate_number"
+    t.string   "ownership_name"
+    t.string   "dba_name"
+    t.string   "full_business_address"
+    t.string   "city"
+    t.string   "state"
+    t.integer  "business_zip"
+    t.date     "dba_start_date"
+    t.date     "dba_end_date"
+    t.date     "location_start_date"
+    t.date     "location_end_date"
+    t.string   "mailing_address_1"
+    t.string   "mailing_city_state_zip_code"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.hstore   "location"
+    t.index ["user_id"], name: "index_businesses_on_user_id", using: :btree
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "email"
+    t.string   "password"
+    t.string   "password_digest"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_foreign_key "bookmarks", "businesses"
+  add_foreign_key "bookmarks", "users"
+  add_foreign_key "businesses", "users"
 end

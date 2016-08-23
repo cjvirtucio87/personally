@@ -1,3 +1,12 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+
+  def prep_soda
+    @client = SODA::Client.new({domain: 'data.sfgov.org',app_token: Rails.application.secrets.socrata_api_key})
+  end
+
+  def query_soda(qparams)
+    @client.get(Rails.application.secrets.data_set_id,qparams)
+  end
+
 end

@@ -16,7 +16,6 @@ class CreateBusinesses < ActiveRecord::Migration[5.0]
       t.date :location_end_date
       t.string :mailing_address_1
       t.string :mailing_city_state_zip_code
-      t.text :location, 
 
       t.timestamps
     end
