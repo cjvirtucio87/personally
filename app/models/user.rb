@@ -5,6 +5,18 @@ class User < ApplicationRecord
   has_many :bookmarks, dependent: :destroy
   has_many :bookmarked_businesses, through: :bookmarks, class_name: 'Bookmark'
 
+  ### Validations ###
+  # Email.
+  VALID_EMAIL_REGEX = /\A[\w\d\.\_]{4,254}@\w{,6}\.\w{3}\z/
+
+  validates_presence_of :email
+  validates_uniqueness_of :email
+  validates :email, format: { with: VALID_EMAIL_REGEX }
+
+  # Password.
+  validates :password, presence: true, length: { in: 6..40 }, on: :create
+  validates :password, confirmation: true, length: { in: 6..40 }, allow_blank: true, on: :update
+
   ### Authentication ###
   has_secure_password
   

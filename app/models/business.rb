@@ -1,7 +1,7 @@
 class Business < ApplicationRecord
   store_accessor :location
 
-  ### Associations [-assoc]###
+  ### Associations ###
   belongs_to :user
   has_many :bookmarks, dependent: :destroy
   has_many :watchers, through: :bookmarks, class_name: 'User'
