@@ -1,0 +1,18 @@
+<%= form_for @business do |business_fields| %>
+  <%= business_fields.label :ownership_name %><br>
+  <%= business_fields.text_field :ownership_name %>
+  <%= business_fields.label :dba_name %><br>
+  <%= business_fields.text_field :dba_name %>
+  <%= business_fields.label :full_business_address %><br>
+  <%= business_fields.text_field :full_business_address %>
+  <%= business_fields.label :city %><br>
+  <%= business_fields.text_field :city %>
+  <%= business_fields.label :state %><br>
+  <%= business_fields.text_field :state %>
+  <%= business_fields.label :business_zip %><br>
+  <%= business_fields.text_field :business_zip %>
+  <%= business_fields.label :mailing_address_1 %><br>
+  <%= business_fields.text_field :mailing_address_1 %>
+  <%= business_fields.label :mailing_city_state_zip_code %><br>
+  <%= business_fields.text_field :mailing_city_state_zip_code %>
+<% end %>
