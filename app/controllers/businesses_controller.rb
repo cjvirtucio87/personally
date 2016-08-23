@@ -11,8 +11,7 @@ class BusinessesController < ApplicationController
 
   def show
     @business = Business.find(params[:id])
-    query = query_soda('ttxid' => "0000024-02-999")
-    @business.compare(query.first)
+    CompareBusinessJob.perform_now(@business.ttxid)
   end
 
   def create

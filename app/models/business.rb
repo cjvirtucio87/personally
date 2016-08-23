@@ -35,7 +35,6 @@ class Business < ApplicationRecord
         end
 
         if business_attrib != data_attrib
-          binding.pry
           return false
         end
       end
