@@ -1,11 +1,16 @@
 class BusinessesController < ApplicationController
   skip_before_action :logged_in_user, except: [:new,:create]
   skip_before_action :correct_user
+  skip_before_action :has_business?
 
   before_action :prep_soda
 
   def index
-    @businesses = Business.all
+    if params[:search]
+      query = query_soda('$q' => params[:search])
+      query = query.map { |result| [result.dba_name,result.ttxid] }
+      @results = query
+    end
   end
 
   def new
@@ -28,7 +33,6 @@ class BusinessesController < ApplicationController
         redirect_to new_business_path
       end
     else
-    # begin
       # Attempt with hashify_query
       hash_query = query_soda(hashify_query)
       if hash_query.empty?
@@ -73,10 +77,6 @@ class BusinessesController < ApplicationController
         end
       end
     end
-    # rescue
-    #   flash[:notice] = "Invalid information."
-    #   redirect_to new_business_path
-    # end
   end
 
   def query_result

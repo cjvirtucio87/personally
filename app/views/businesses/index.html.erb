@@ -1,11 +1,15 @@
-<%
-  @businesses.each do |business|
-    business.attributes.each do |attr|
-%>
-  <%= attr %><br>
-<%
-    end
-  end
-%>
+<h1>Search businesses</h1>
 
-<%= link_to "New business", businesses_path, action: :create, method: :post %>
+<%= form_tag "/businesses", method: 'get' do %>
+  <%= text_field_tag 'search', 'Search businesses', class: 'form-control'%>
+<% end %>
+
+<% if @results %>
+  <%= form_tag businesses_path, action: :create, method: :post do %>
+    <% @results.each do |result| %>
+      <p><%= "dba_name: #{result[0]}" %></p>
+      <%= link_to "See details", query_result_path(ttxid: result) %><br>
+    <% end %>
+    <%= submit_tag "Submit" %>
+  <% end %>
+<% end %>

@@ -15,6 +15,9 @@
     
     <%= yield %>
 
-    <%= link_to("Logout",logout_path,{ action: :destroy, method: :post }) if logged_in? %>
+    <nav>
+      <span><%= link_to("Logout",logout_path,{ action: :destroy, method: :post }) if logged_in? %></span>
+      <span><%= link_to("Search", search_path) %></span>
+    </nav>
   </body>
 </html>

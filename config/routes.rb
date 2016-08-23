@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   root to: 'sessions#new'
 
+  get 'search' => 'businesses#index'
+
   get 'login' => 'sessions#new'
 
   post 'login' => 'sessions#create'

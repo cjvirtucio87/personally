@@ -2,6 +2,7 @@ class SessionsController < ApplicationController
   # From ApplicationController
   skip_before_action :logged_in_user, except: [:destroy]
   skip_before_action :correct_user
+  skip_before_action :has_business?
 
   # From SessionsController
   before_action :set_user, only: [:create]
@@ -14,7 +15,12 @@ class SessionsController < ApplicationController
   def create
     log_in @user
     flash[:success] = 'Login successful.'
-    redirect_to @user.business
+    if @user.business.present?
+      redirect_to @user.business
+    else
+      flash[:info] = 'You have not yet set up your business information.'
+      redirect_to new_business_path
+    end
   end
 
   def destroy
@@ -42,9 +48,8 @@ class SessionsController < ApplicationController
           flash[:info] = "You are already logged in."
           redirect_to current_user.business
         else
-          session.clear
-          flash[:info] = "You were logged in but no business was saved during the creation of your account. Please contact the administrator."
-          redirect_to login_path
+          flash[:info] = "You have not yet set up your business info."
+          redirect_to new_business_path
         end
       end
     end

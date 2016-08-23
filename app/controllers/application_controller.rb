@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   ### Callbacks ###
   before_action :logged_in_user
   before_action :correct_user
+  before_action :has_business?
 
 
   ### SODA API ###
@@ -59,5 +60,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def has_business?
+    unless current_user.business.present?
+      flash[:info] = 'You have not yet set up your business information.'
+      redirect_to new_business_path
+    end
+  end
 
 end
