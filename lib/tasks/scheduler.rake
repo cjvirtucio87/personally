@@ -21,9 +21,13 @@ end
 
 task :notify_watchers => :environment do
   users = User.watchers
-  users.each do |user|
-    puts "Informing watchers.."
-    NotifyWatchersJob.perform_now(user.business.ttxid)
-    puts "Done."
+  if watchers.empty?
+    puts "No bookmarks at the moment!"
+  else
+    users.each do |user|
+      puts "Informing watchers.."
+      NotifyWatchersJob.perform_now(user.business.ttxid)
+      puts "Done."
+    end
   end
 end
