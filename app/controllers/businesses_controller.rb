@@ -1,4 +1,7 @@
 class BusinessesController < ApplicationController
+  skip_before_action :logged_in_user, except: [:new,:create]
+  skip_before_action :correct_user
+
   before_action :prep_soda
 
   def index
@@ -11,7 +14,6 @@ class BusinessesController < ApplicationController
 
   def show
     @business = Business.find(params[:id])
-    # CompareBusinessJob.perform_now(@business.ttxid)
   end
 
   def create

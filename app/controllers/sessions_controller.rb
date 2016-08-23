@@ -1,5 +1,9 @@
 class SessionsController < ApplicationController
-  
+  # From ApplicationController
+  skip_before_action :logged_in_user, except: [:destroy]
+  skip_before_action :correct_user
+
+  # From SessionsController
   before_action :set_user, only: [:create]
   before_action :validate_credentials, only: [:create]
   before_action :redirect_logged_in, except: [:destroy]

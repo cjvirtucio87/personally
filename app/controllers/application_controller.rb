@@ -1,9 +1,15 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  # Methods to be made available to the view.
   helper_method :logged_in?, 
                 :current_user, 
                 :logged_in_user
+
+  ### Callbacks ###
+  before_action :logged_in_user
+  before_action :correct_user
+
 
   ### SODA API ###
   def prep_soda
@@ -29,18 +35,29 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    # Conditional for whether the user is in session.
     if id = session[:user_id]
       @current_user ||= User.find_by(id: id)
-    # Log user in if he's not in session, but has a remember_token in cookie.
-    elsif id = cookies.signed[:user_id]
-      user = User.find_by(id: id)
-      token = cookies[:remember_token]
-      if user && user.authenticated?(:remember,token)
-        log_in user
-        @current_user = user
+    end
+  end
+
+  def correct_user
+    unless current_user.nil?
+      case current_user.id
+      when params[:id].to_i, params[:user_id].to_i
+        return true
+      else
+        flash[:notice] = "You are not authorized to access that page."
+        redirect_to root_url
       end
     end
   end
+
+  def logged_in_user
+    if !logged_in?
+      flash[:notice] = "You must first log in."
+      redirect_to login_path 
+    end
+  end
+
 
 end
