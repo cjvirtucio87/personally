@@ -2,8 +2,9 @@
 <% if @data %>
   <%= form_tag businesses_path, action: :create, method: :post do %>
     <% @data.each do |data| %>
-      <%= radio_button_tag(:selected, data) %>
-      <%= link_to "See result", query_result_path(ttxid: data) %><br>
+      <%= radio_button_tag(:selected, data[1]) %>
+      <%= "dba_name: #{data[0]}" %>
+      <%= link_to "See details", query_result_path(ttxid: data[1]) %><br>
     <% end %>
     <%= submit_tag "Submit" %>
   <% end %>

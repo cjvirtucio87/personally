@@ -44,7 +44,7 @@ class BusinessesController < ApplicationController
         else
           # More than one result
           if string_query.count > 1
-            @data = string_query.map { |result| result.ttxid }
+            @data = string_query.map { |result| [result.dba_name,result.ttxid] }
             @business = current_user.build_business
             flash.now[:success] = "We've found more than one result."
             render :new
@@ -61,7 +61,7 @@ class BusinessesController < ApplicationController
         end
       else
         if hash_query.count > 1
-          @data = hash_query.map { |result| result.ttxid }
+          @data = hash_query.map { |result| [result.dba_name,result.ttxid] }
           @business = current_user.build_business
           flash.now[:success] = "We've found more than one result."
           render :new
@@ -80,7 +80,7 @@ class BusinessesController < ApplicationController
   end
 
   def query_result
-    @business = query_selected_result.first
+    @data = query_selected_result.first
     render :query_result
   end
 

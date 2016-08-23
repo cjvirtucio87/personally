@@ -8,7 +8,7 @@
   <%= form_tag businesses_path, action: :create, method: :post do %>
     <% @results.each do |result| %>
       <p><%= "dba_name: #{result[0]}" %></p>
-      <%= link_to "See details", query_result_path(ttxid: result) %><br>
+      <%= link_to "See details", query_result_path(ttxid: result[1]) %><br>
     <% end %>
     <%= submit_tag "Submit" %>
   <% end %>
