@@ -14,5 +14,7 @@
     <% end %>
     
     <%= yield %>
+
+    <%= link_to "Logout", logout_path, action: :destroy, method: :post %>
   </body>
 </html>

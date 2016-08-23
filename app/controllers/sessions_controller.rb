@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   
   before_action :set_user, only: [:create]
   before_action :validate_credentials, only: [:create]
-  before_action :redirect_logged_in
+  before_action :redirect_logged_in, except: [:destroy]
 
   def new
   end
@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
   def create
     log_in @user
     flash[:success] = 'Login successful.'
-    redirect_to @user
+    redirect_to @user.business
   end
 
   def destroy
