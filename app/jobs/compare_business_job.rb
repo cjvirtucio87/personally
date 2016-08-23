@@ -6,12 +6,12 @@ class CompareBusinessJob < ApplicationJob
     query = query_soda('ttxid' => ttxid.to_s)
     business = Business.find_by_ttxid(ttxid)
     if !business.compare(query.first)
-      binding.pry
+      UserMailer.warn(business.user).deliver!
     end
   end
 
   private
-  
+
     def prep_soda
       @client = SODA::Client.new({domain: 'data.sfgov.org',app_token: Rails.application.secrets.socrata_api_key})
     end
