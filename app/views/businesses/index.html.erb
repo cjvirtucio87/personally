@@ -5,11 +5,22 @@
 <% end %>
 
 <% if @results %>
-  <%= form_tag businesses_path, action: :create, method: :post do %>
-    <% @results.each do |result| %>
-      <p><%= "dba_name: #{result[0]}" %></p>
-      <%= link_to "See details", query_result_path(ttxid: result[1]) %><br>
+  <% @results.each do |result| %>
+    <p><%= "dba_name: #{result[0]}" %></p>
+    <%= link_to "See details", query_result_path(ttxid: result[1]) %><br>
+    <% if bookmarked?(result) %>
+      <% bookmark = nil %>
+      <% if @bookmarks.respond_to?(:count) %>
+        <% bookmark = @bookmarks.find { |bookmark| bookmark.txid == result[1] } %>
+      <% else %>
+        <% bookmark = @bookmarks %>
+      <% end %>
+      <%= link_to "Unbookmark", bookmark, action: :destroy, method: :delete %>
+    <% else %>
+      <%= form_for @bookmark do |bookmark_fields| %>
+        <%= hidden_field_tag "bookmark[ttxid]", result[1] %>
+        <%= bookmark_fields.submit "Bookmark"%>
+      <% end %>
     <% end %>
-    <%= submit_tag "Submit" %>
   <% end %>
 <% end %>

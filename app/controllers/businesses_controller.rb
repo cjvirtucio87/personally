@@ -10,6 +10,8 @@ class BusinessesController < ApplicationController
       query = query_soda('$q' => params[:search])
       query = query.map { |result| [result.dba_name,result.ttxid] }
       @results = query
+      @bookmarks = Bookmark.find_by_ttxid(query.map{ |result| result[1] })
+      @bookmark = current_user.bookmarks.build
     end
   end
 

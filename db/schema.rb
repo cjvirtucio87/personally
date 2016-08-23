@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160823165837) do
+ActiveRecord::Schema.define(version: 20160823213148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
 
   create_table "bookmarks", force: :cascade do |t|
-    t.integer  "business",   null: false
     t.integer  "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "ttxid"
     t.index ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
   end
 

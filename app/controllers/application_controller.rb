@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
   # Methods to be made available to the view.
   helper_method :logged_in?, 
                 :current_user, 
-                :logged_in_user
+                :logged_in_user,
+                :bookmarked?
 
   ### Callbacks ###
   before_action :logged_in_user
@@ -65,6 +66,10 @@ class ApplicationController < ActionController::Base
       flash[:info] = 'You have not yet set up your business information.'
       redirect_to new_business_path
     end
+  end
+
+  def bookmarked?(result)
+    Bookmark.where(ttxid: result[1]).any?
   end
 
 end

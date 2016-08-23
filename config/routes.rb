@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :bookmarks, only: [:create, :destroy]
+
   root to: 'sessions#new'
 
   get 'search' => 'businesses#index'
