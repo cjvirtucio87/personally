@@ -6,7 +6,7 @@ class BusinessesController < ApplicationController
   end
 
   def new
-    @business = Business.new
+    @business = current_user.build_business
   end
 
   def show
@@ -17,7 +17,7 @@ class BusinessesController < ApplicationController
   def create
     if params['selected']
       data = query_selected.first.to_h
-      @business = Business.new(data)
+      @business = current_user.build_business(data)
       if @business.save
         flash[:success] = "Business saved."
         redirect_to @business
@@ -39,11 +39,11 @@ class BusinessesController < ApplicationController
           # More than one result
           if string_query.count > 1
             @data = string_query.map { |result| result.ttxid }
-            @business = Business.new
+            @business = current_user.build_business
             flash.now[:success] = "We've found more than one result."
             render :new
           else
-            @business = Business.new(string_query.first.to_h)
+            @business = current_user.build_business(string_query.first.to_h)
             if @business.save
               flash[:success] = "Business saved."
               redirect_to @business
@@ -56,11 +56,11 @@ class BusinessesController < ApplicationController
       else
         if hash_query.count > 1
           @data = hash_query.map { |result| result.ttxid }
-          @business = Business.new
+          @business = current_user.build_business
           flash.now[:success] = "We've found more than one result."
           render :new
         else
-          @business = Business.new(hash_query.first.to_h)
+          @business = current_user.build_business(hash_query.first.to_h)
           if @business.save
             flash[:success] = "Business saved."
             redirect_to @business
