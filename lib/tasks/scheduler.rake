@@ -21,7 +21,7 @@ end
 
 task :notify_watchers => :environment do
   users = User.watchers
-  if watchers.empty?
+  if users.empty?
     puts "No bookmarks at the moment!"
   else
     users.each do |user|
