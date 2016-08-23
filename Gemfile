@@ -7,7 +7,7 @@ gem 'delayed_job_active_record'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem 'rails_12factor'
-
+gem 'Bcrypt'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

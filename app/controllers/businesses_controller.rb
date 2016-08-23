@@ -11,7 +11,7 @@ class BusinessesController < ApplicationController
 
   def show
     @business = Business.find(params[:id])
-    CompareBusinessJob.perform_now(@business.ttxid)
+    # CompareBusinessJob.perform_now(@business.ttxid)
   end
 
   def create

@@ -6,6 +6,8 @@ class User < ApplicationRecord
   has_many :bookmarked_businesses, through: :bookmarks, class_name: 'Bookmark'
 
   ### Authentication ###
+  has_secure_password
+  
   # Token and digest creation for security.
   def User.new_token
     SecureRandom.urlsafe_base64

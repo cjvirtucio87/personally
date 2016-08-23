@@ -5,9 +5,9 @@ class CompareBusinessJob < ApplicationJob
     prep_soda
     query = query_soda('ttxid' => ttxid.to_s)
     business = Business.find_by_ttxid(ttxid)
-    # if !business.compare(query.first)
+    if !business.compare(query.first)
       UserMailer.warn(business.user).deliver!
-    # end
+    end
   end
 
   private

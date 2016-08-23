@@ -63,6 +63,7 @@ Rails.application.configure do
   enable_starttls_auto: true 
   }
 
+  # Development environment still needs a host for mailer.
   config.action_mailer.default_url_options = {
     :host => 'localhost:3000',
   }
