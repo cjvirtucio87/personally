@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-
+  scope :watchers, -> { joins(:bookmarks).where("users.id = bookmarks.user_id") }
+  
   ### Associations ###
   has_one :business, dependent: :nullify
   has_many :bookmarks, dependent: :destroy

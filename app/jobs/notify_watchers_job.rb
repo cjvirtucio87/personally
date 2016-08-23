@@ -1,14 +1,11 @@
-class CompareBusinessJob < ApplicationJob
+class NotifyWatchersJob < ApplicationJob
   queue_as :default
 
   def perform(ttxid)
     prep_soda
     query = query_soda('ttxid' => ttxid.to_s)
     business = Business.find_by_ttxid(ttxid)
-    if !business.compare(query.first)
-      UserMailer.warn(business.user).deliver!
-      return true
-    end
+    UserMailer.notify(business.user).deliver!
   end
 
   private
@@ -20,5 +17,4 @@ class CompareBusinessJob < ApplicationJob
     def query_soda(qparams)
       @client.get(Rails.application.secrets.data_set_id,qparams)
     end
-
 end

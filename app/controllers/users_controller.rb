@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
   # From ApplicationController
-  skip_before_action :logged_in_user
+  skip_before_action :logged_in_user, except: [:show]
   skip_before_action :correct_user
   skip_before_action :has_business?
 
   # From UsersController
-  before_action :not_logged_in
+  before_action :not_logged_in, except: [:show]
   
   def new
     @user = User.new

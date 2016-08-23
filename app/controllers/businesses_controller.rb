@@ -1,5 +1,5 @@
 class BusinessesController < ApplicationController
-  skip_before_action :logged_in_user, except: [:new,:create]
+  skip_before_action :logged_in_user, except: [:new,:create,:show]
   skip_before_action :correct_user
   skip_before_action :has_business?
 

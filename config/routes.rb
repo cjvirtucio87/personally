@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   post 'logout' => 'sessions#destroy'
 
-  resources :users
+  resources :users, except: [:show]
 
   get 'query_result' => 'businesses#query_result'
 

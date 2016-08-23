@@ -1,4 +1,5 @@
-class Bookmark < ApplicationRecord
+class Bookmark < ApplicationRecord 
+
   belongs_to :user
 
   ### Validations ###
