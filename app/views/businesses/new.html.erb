@@ -1,7 +1,7 @@
 <% if @data %>
   <%= form_tag businesses_path, action: :create, method: :post do %>
     <% @data.each do |data| %>
-      <%= radio_button_tag(:business, data) %>
+      <%= radio_button_tag(:selected, data) %>
       <% hidden_field_tag :query_result, data %>
       <%= link_to "See result" %><br>
     <% end %>

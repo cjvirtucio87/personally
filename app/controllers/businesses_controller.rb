@@ -9,7 +9,24 @@ class BusinessesController < ApplicationController
     @business = Business.new
   end
 
+  def show
+    @business = Business.find(params[:id])
+    query = query_soda('ttxid' => "0000024-02-999")
+    @business.compare(query.first)
+  end
+
   def create
+    if params['selected']
+      data = query_selected.first.to_h
+      @business = Business.new(data)
+      if @business.save
+        flash[:success] = "Business saved."
+        redirect_to @business
+      else
+        flash[:notice] = "Business could not be saved."
+        redirect_to new_business_path
+      end
+    else
     # begin
       # Attempt with hashify_query
       hash_query = query_soda(hashify_query)
@@ -22,7 +39,7 @@ class BusinessesController < ApplicationController
         else
           # More than one result
           if string_query.count > 1
-            @data = string_query
+            @data = string_query.map { |result| result.ttxid }
             @business = Business.new
             flash.now[:success] = "We've found more than one result."
             render :new
@@ -39,7 +56,7 @@ class BusinessesController < ApplicationController
         end
       else
         if hash_query.count > 1
-          @data = hash_query
+          @data = hash_query.map { |result| result.ttxid }
           @business = Business.new
           flash.now[:success] = "We've found more than one result."
           render :new
@@ -54,6 +71,7 @@ class BusinessesController < ApplicationController
           end
         end
       end
+    end
     # rescue
     #   flash[:notice] = "Invalid information."
     #   redirect_to new_business_path
@@ -100,6 +118,11 @@ class BusinessesController < ApplicationController
       string = ""
       hash_upcase.each { |k,v| string += "#{v} " if v != '' }
       string[0..-2]
+    end
+
+    def query_selected
+      query = { 'ttxid' => params['selected'] }
+      query_soda(query)
     end
 
 end
