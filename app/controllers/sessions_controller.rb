@@ -2,6 +2,7 @@ class SessionsController < ApplicationController
   
   before_action :set_user, only: [:create]
   before_action :validate_credentials, only: [:create]
+  before_action :redirect_logged_in
 
   def new
   end
@@ -27,6 +28,13 @@ class SessionsController < ApplicationController
       if @user.nil? || !@user.authenticate(params[:session][:password])
         flash[:danger] = 'Invalid username/password.'
         redirect_to login_path
+      end
+    end
+
+    def redirect_logged_in
+      if logged_in?
+        flash[:info] = "You are already logged in."
+        redirect_to current_user.business
       end
     end
 
