@@ -1,3 +1,13 @@
+<% if @data %>
+  <%= form_tag businesses_path, action: :create, method: :post do %>
+    <% @data.each do |data| %>
+      <%= radio_button_tag(:business, data) %>
+      <% hidden_field_tag :query_result, data %>
+      <%= link_to "See result" %><br>
+    <% end %>
+    <%= submit_tag "Submit" %>
+  <% end %>
+<% else %>
 <%= form_for @business do |business_fields| %>
   <%= business_fields.label :ownership_name %><br>
   <%= business_fields.text_field :ownership_name %><br>
@@ -16,4 +26,6 @@
   <%= business_fields.label :mailing_city_state_zip_code %><br>
   <%= business_fields.text_field :mailing_city_state_zip_code %><br>
   <%= business_fields.submit "Submit" %><br>
+<% end %>
+
 <% end %>

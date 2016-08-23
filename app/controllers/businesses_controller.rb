@@ -23,8 +23,9 @@ class BusinessesController < ApplicationController
           # More than one result
           if string_query.count > 1
             @data = string_query
-            flash[:success] = "We've found more than one result."
-            redirect_to new_business_path
+            @business = Business.new
+            flash.now[:success] = "We've found more than one result."
+            render :new
           else
             @business = Business.new(string_query.first.to_h)
             if @business.save
@@ -39,8 +40,9 @@ class BusinessesController < ApplicationController
       else
         if hash_query.count > 1
           @data = hash_query
-          flash[:success] = "We've found more than one result."
-          redirect_to new_business_path
+          @business = Business.new
+          flash.now[:success] = "We've found more than one result."
+          render :new
         else
           @business = Business.new(hash_query.first.to_h)
           if @business.save
@@ -56,6 +58,10 @@ class BusinessesController < ApplicationController
     #   flash[:notice] = "Invalid information."
     #   redirect_to new_business_path
     # end
+  end
+
+  def query_result
+    @data = params[:query_result]
   end
 
   private
