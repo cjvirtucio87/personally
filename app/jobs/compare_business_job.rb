@@ -11,7 +11,7 @@ class CompareBusinessJob < ApplicationJob
   end
 
   private
-
+  
     def prep_soda
       @client = SODA::Client.new({domain: 'data.sfgov.org',app_token: Rails.application.secrets.socrata_api_key})
     end
