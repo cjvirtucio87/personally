@@ -1,10 +1,6 @@
 <h1>Businesses#show</h1>
 <p>Find me in app/views/businesses/show.html.erb</p>
 
-<%
-  @business.attributes.each do |attr|
-%>
-  <%= attr %><br>
-<%
-  end
+<%=
+  show_business_details @business
 %>

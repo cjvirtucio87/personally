@@ -78,7 +78,8 @@ class BusinessesController < ApplicationController
   end
 
   def query_result
-    @data = params[:query_result]
+    @business = query_selected_result.first
+    render :query_result
   end
 
   private
@@ -121,6 +122,11 @@ class BusinessesController < ApplicationController
 
     def query_selected
       query = { 'ttxid' => params['selected'] }
+      query_soda(query)
+    end
+
+    def query_selected_result
+      query = { 'ttxid' => params['ttxid'] }
       query_soda(query)
     end
 

@@ -33,8 +33,15 @@ class SessionsController < ApplicationController
 
     def redirect_logged_in
       if logged_in?
-        flash[:info] = "You are already logged in."
-        redirect_to current_user.business
+        # logged in but no business saved due to interrupted flow
+        if current_user && current_user.business
+          flash[:info] = "You are already logged in."
+          redirect_to current_user.business
+        else
+          session.clear
+          flash[:info] = "You were logged in but no business was saved during the creation of your account. Please contact the administrator."
+          redirect_to login_path
+        end
       end
     end
 

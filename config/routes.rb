@@ -10,8 +10,8 @@ Rails.application.routes.draw do
 
   resources :users
 
-  resources :businesses do
-    get 'query_result'
-  end
+  get 'query_result' => 'businesses#query_result'
+
+  resources :businesses
   
 end
