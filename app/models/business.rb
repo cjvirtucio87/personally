@@ -3,7 +3,7 @@ class Business < ApplicationRecord
 
   ### Associations [-assoc]###
   belongs_to :user
-  has_many :bookmarks
+  has_many :bookmarks, dependent: :destroy
   has_many :watchers, through: :bookmarks, class_name: 'User'
 
 
